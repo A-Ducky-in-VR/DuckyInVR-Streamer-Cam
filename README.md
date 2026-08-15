@@ -1,3 +1,4 @@
+# Streamer Cam Public Beta
 
 Streamer Cam Public Beta is a lightweight **Orion Drift spectator camera script** made for streamers, casters, and clip creators.
 
@@ -26,15 +27,27 @@ This is a **public beta**, so feedback and bug reports are welcome.
 
 1. Download the latest release zip.
 2. Extract the zip file.
-3. Install the folder named:
+3. Move the extracted folder named:
 
 ```text
 duckyinvr.streamercam.public
 ```
 
-as an Orion Drift spectator script package.
+into your Orion Drift camera behaviors folder.
 
-The package should contain:
+On Windows, that folder is usually here:
+
+```text
+C:\Users\<YourWindowsUsername>\OneDrive\Documents\Another-Axiom\A2\Cameras\Behaviors
+```
+
+After installing, the folder should look like this:
+
+```text
+C:\Users\<YourWindowsUsername>\OneDrive\Documents\Another-Axiom\A2\Cameras\Behaviors\duckyinvr.streamercam.public
+```
+
+The package folder should contain:
 
 ```text
 duckyinvr.streamercam.public/
