@@ -1,260 +1,198 @@
-# Streamer Cam Public Beta
+# Streamer Cam
 
-Streamer Cam Public Beta is a lightweight **Orion Drift spectator camera script** made for streamers, casters, and clip creators.
+A spectator camera for Orion Drift. You pick a player, it follows them, and it changes camera by itself when they go into an arena. It also does ball cams, goal explosions, kickoff graphics, ball trails, and there's a duck.
 
-This first public version focuses on a smaller set of camera tools that are useful for basic spectating, streaming, casting, and recording gameplay.
+Package id: `duckyinvr.streamercam.public`. Version 1.0.0. Made by duckyinvr.
 
-## Current Version
+This is a fan project. It isn't made or endorsed by Another Axiom.
 
-**v0.1.3**
+## What it does
 
-## What This Script Does
+- **Follows one player.** Third person, first person, a "ball look" third person, or a vlog-style handheld camera.
+- **Switches by itself.** One camera mode while your player is walking around outside, another one the moment they're in an arena.
+- **Ball cams.** Simple Ball Cam (wide shot on the ball), a version with a goal cam and kickoff cam, and Ball Carrier (player cam on whoever has the ball).
+- **Free Cam and Fixed Camera.** Fly it yourself with keyboard or controller, or park it somewhere.
+- **Goal explosions.** 21 of them, drawn by the camera when a goal goes in. You can give up to five players their own.
+- **Kickoff graphics.** A countdown around the ball at the start of a round.
+- **Ball trail, ball outline, player markers.**
+- **SpecPet.** The camera becomes a pet that follows your player. A duckling, a kitty or a pidgeon. You can pet it.
+- **Extras.** Picture filters, a server search that looks for your player on other servers, and match data for OD Caster Bridge overlays.
 
-Streamer Cam gives spectators a few camera modes designed to make Orion Drift easier to watch and record.
+Goal explosions and the other graphics are drawn by this camera. Only people watching your camera (your stream or recording) see them. Players in the match don't.
 
-It includes:
+## Install
 
-- target player selection
-- outside-arena camera modes
-- inside-arena camera modes
-- a simple ball-follow camera
-- configurable ball trail graphics
-- custom goal explosion overlays
+1. Download `duckyinvr.streamercam.public.zip` from the latest release.
+2. Put it in `Documents\Another-Axiom\A2\Cameras\Behaviors`.
+3. Extract it there with "Extract Here".
+4. Check that this file exists: `Behaviors\duckyinvr.streamercam.public\main.luau`.
 
-This is a **public beta**, so feedback and bug reports are welcome.
+If you use Windows "Extract All", it wants to add a second folder with the same name. Delete that extra name from the path before you extract, so the path ends at `Behaviors\`. If you end up with `duckyinvr.streamercam.public\duckyinvr.streamercam.public\main.luau`, the camera won't show up. Move the inner folder up one level.
 
-## Installation
+To update, extract the new zip over the old folder and let it replace the files.
 
-1. Download the latest release zip.
-2. Extract the zip file.
-3. Move the extracted folder named:
+## Quick start
 
-```text
-duckyinvr.streamercam.public
-```
+1. Open the spectator client, pick **Streamer Cam** as your camera and open its menu (F3).
+2. Open **1. Target player** and pick a player.
+3. Open **2. Camera modes** and pick what you want outside an arena and inside one. If you don't know yet, try `Third Person - Head Movement` outside and `Autocast - Simple Ball Cam` inside.
+4. Press **Save settings** at the top.
 
-into your Orion Drift camera behaviors folder.
+That's all you need. Everything below is optional.
 
-On Windows, that folder is usually here:
+Sliders and checkboxes are only remembered for next time when you press **Save settings**.
 
-```text
-C:\Users\<YourWindowsUsername>\OneDrive\Documents\Another-Axiom\A2\Cameras\Behaviors
-```
+## Camera modes
 
-After installing, the folder should look like this:
+Outside an arena you can use the first five. Inside an arena you can use all ten.
 
-```text
-C:\Users\<YourWindowsUsername>\OneDrive\Documents\Another-Axiom\A2\Cameras\Behaviors\duckyinvr.streamercam.public
-```
+| Mode | What it does |
+| --- | --- |
+| Third Person - Head Movement | Behind the player, turning with their head. |
+| First Person POV | Through the player's eyes. |
+| Vlog Camera (Follow+) | Handheld camera from Follow+. The player can also grab the camera with a hand. Without Follow+ installed it's just third person. |
+| Free Cam | You fly it. |
+| SpecPet | The camera is a pet that follows the player. |
+| Third Person - Ball Look | Behind the player, but looking toward the ball. |
+| Autocast - Simple Ball Cam | Wide shot that follows the ball. No goal cam or kickoff cam cuts. This is the one I use for clips. |
+| Autocast - Simple Ball Cam + Goal Cam | Same, plus a cut to the goal for each goal explosion and a kickoff shot. |
+| Autocast - Ball Carrier | Player cam on whoever has the ball, ball cam while it's loose. |
+| Fixed Camera | Stays at a spot you saved. |
 
-The package folder should contain:
+With no player picked the camera is a Free Cam. The exception is the three Autocast modes: they run with no player too.
 
-```text
-duckyinvr.streamercam.public/
-  README.md
-  main.luau
-  package.json
-  particlesystem.luau
-```
+### The ball cams stay in one arena
 
-4. Open Orion Drift.
-5. Open the spectator script menu.
-6. Select **Streamer Cam Public Beta**.
+On a server with several matches going (ranked), the three Autocast modes stick to one arena:
 
-## Included Modes
+- With a player picked, it's that player's arena.
+- With no player picked, it's the arena whose ball was nearest the camera when the ball cam started.
 
-### Outside Arena Modes
+When that arena has no ball for a bit (after a goal, between rounds), the camera waits there. It doesn't go off to another arena's ball. To move a no-player ball cam to a different arena, pick a player there, or set the inside mode to Free Cam, fly over and set it back.
 
-Outside arena modes are used when the selected target is not actively inside an arena.
+If the target's arena has no ball for more than about 8 seconds, the camera goes to the player in third person until the ball is back.
 
-#### Third Person - Head Movement
+### Free Cam controls
 
-This mode follows behind the selected player and uses their head direction to guide the camera.
+| | Keyboard and mouse | Controller |
+| --- | --- | --- |
+| Move | W A S D | Left stick |
+| Look | Mouse | Right stick |
+| Up / down | Space / Ctrl | Right trigger / left trigger |
+| Fast | Shift | RB |
+| Slow | Alt | LB |
 
-It is useful for:
+## The menu, section by section
 
-- following a selected player before they enter an arena
-- getting simple third-person spectator shots
-- keeping the camera attached to a target without needing manual control
+The sections are numbered. In each one the everyday settings are at the top, and anything called "fine tuning" can be left alone.
 
-#### Free Cam
+**1. Target player.** Pick who the camera follows. There's a search box if the server is full. "Find the target on another server" is the experimental server search (see below).
 
-Free Cam gives manual camera control.
+**2. Camera modes.** The outside mode, the inside mode, and the switch that turns automatic switching on or off. A line under each one says what the mode does.
 
-It is useful for:
+**3. Camera settings.** FOV, and distance / height / speed for each follow mode. Free Cam speed and controller options are here. So is Fixed Camera: fly somewhere, press "Save current view as fixed camera", then pick Fixed Camera as your inside mode.
 
-- setting up shots
-- moving around freely
-- filming intros or transitions
-- spectating without being locked to a player
+**4. Ball cams and goal cam.** Distance, height and FOV for Simple Ball Cam, the Ball Carrier settings, the goal cam, and how long an empty arena is kept.
 
-## Inside Arena Modes
+**5. SpecPet.** Pick the pet and how it behaves. Set a mode to `SpecPet` in section 2 first.
 
-Inside arena modes are used when the selected target is inside an arena.
+**6. Graphics.** Ball outline, ball trail (10 styles), a marker over your player, markers over the other players. These are drawn while your player is in an arena. The ball cams only draw the ball outline and trail.
 
-### Basic Ball Follow
+**7. Goal explosions.** See the next part.
 
-Basic Ball Follow is a simple ball-focused camera.
+**8. Kickoff graphics and kickoff cam.** The countdown graphic (4 styles), and the kickoff shot for the ball cams that have a goal cam (side on, orbiting, or top down). There's a test button.
 
-Instead of trying to do complicated automatic casting, this mode keeps the camera focused on the ball so the action is easier to follow.
+**9. Picture filter.** Bloom, vignette, exposure and a few presets. Off until you tick it. Experimental.
 
-It is useful for:
+**10. Overlay data for OD Caster Bridge.** Only for people running Caster Bridge overlays.
 
-- clips
-- casting
-- general spectator viewing
-- following fast plays without manually tracking the ball
+**11. About and credits.**
 
-### Third Person - Head Movement
+## Goal explosions
 
-This mode follows the selected player from a third-person angle while they are in arena.
+Open **7. Goal explosions**.
 
-It is useful for:
+- **Explosion for every goal** is the one that plays when anybody scores.
+- **Goal explosion color** is Default (team colours), one of the paint colours, or Custom RGB.
+- **Preview explosions** lets you try them. Pick one and press "Test Blue Explosion" or "Test Orange Explosion". "Start preview camera" parks the camera in front of a goal so you see the whole thing, and "Next explosion + test" steps through all of them. You need to be in or near an arena.
+- **Give a player their own explosion** has five slots. Pick a player and an explosion. When they score, theirs plays.
 
-- player-focused clips
-- following a specific player
-- showing movement and positioning from behind the player
+The list: Basic Burst, Ripple Wave, Caster Burst, Crumble, Claw Strike, Implosion, Fireworks, Lightning Strike, Net Ripple, Glass Shatter, Tornado, Ducky Spirit, Dueling Dragons, Juice Box, Lucky Cat, UFO, Gunslinger, Airstrike, Zero-G Battle, Slushie, Trash Panda.
 
-### Third Person - Ball Look
+Things to know:
 
-This mode keeps the camera near the selected player but aims the camera toward the ball.
+- Who scored is worked out from the last touches on the ball. Most of the time it's right. When it's wrong you get the explosion for every goal, or now and then another player's.
+- Caster Burst needs "Use Caster particle system for Caster Burst" ticked (under "Explosion size and detail"). Without it you get Basic Burst.
+- Goals are detected in Driftball 3v3, Driftball 4v4, Driftblitz and Z-Drift arenas. In other arenas nothing plays. The goal cam is for 3v3 and 4v4.
+- In the ball cams, a goal on zero seconds or in overtime keeps the camera in the arena until the explosion is done. Then it follows your player out.
 
-It is useful when you want to:
+## Works with
 
-- keep the selected player in context
-- still see where the ball is
-- capture player positioning and ball action together
+You don't need any of these. The camera runs fine without them.
 
-## Graphics
+- **[Follow+](https://github.com/dennssen/Follow-Plus)** by Dennssen. The Vlog Camera mode uses it when it's installed.
+- **[OD Caster Bridge](https://github.com/dennssen/OD_Caster_Bridge)** by Dennssen. Tick "Send Overlay Info" in section 10 and set the bridge's Camera API box to `duckyinvr.streamercam.public`.
 
-### Ball Trail
+About the overlay data:
 
-Streamer Cam Public Beta includes a configurable ball trail effect.
+- Possession, passes, shots, saves, assists, shot speed and boost are estimates worked out from how the players and ball move. Don't treat them as official stats.
+- When a match is over and everybody has left the arena (or the camera has followed your player out), the camera stops sending that match about 3 seconds later, so a scoreboard doesn't sit there showing an old game. It starts again when a round runs in that arena. There's a checkbox to turn this off.
+- When the camera itself is outside every arena (in the hub, for example) for 2 seconds, it sends "no arena" instead of the last arena, match running or not. Fly back in and that arena's data is back straight away, finished rounds included. It never does this while a ball cam or a player cam is casting an arena, wherever the camera sits. Section 10 has a checkbox for it, a slider for the 2 seconds, and a slider for how far outside an arena still counts as inside (2,500 = 25 metres by default, so an overview from above or a sideline spot doesn't clear anything). The "Camera:" line there shows how far outside the nearest arena you are, which is what you need to set that slider.
+- "No arena" / "no match" is the same table with an empty `gamemodeId` and every other field empty or zero. Your overlay has to hide itself (or show standby) when it sees that.
 
-The ball trail helps make the ball easier to see during fast plays and can make clips look more dynamic.
+## Experimental stuff
 
-Ball trail settings include:
+These are less finished than the rest.
 
-- trail style
-- trail fade time
-- trail thickness
-- trail glow width
-- trail core width
-- trail vibrance
-- speed-based trail coloring
+- **Server search** (section 1). It moves your spectator through the matchmaking servers one at a time looking for your player, and gives up after two passes. "Auto-follow" does that by itself whenever your player leaves. It can take a while, and it will pull you off the server you're on, so don't leave it on by accident.
+  - It learns where your player usually is. Every time they're found on a matchmaking server (by a search, or just there when you arrive), that server's count for that player goes up. The next search asks for their most-visited servers first, then servers other players you followed were on, then the rest. Every server still gets checked twice; only the order changes. The menu shows the counts, and there's a checkbox to turn it off and a "Forget remembered servers" button. It remembers the last 8 players.
+  - Some servers don't load when you join them: the game drops you back to its main menu instead. When that happens, come back into spectator and the camera will have worked out which server did it. That server is left out of searches for 2 hours (the menu names it and has a "Check those servers again" button), and a search that was running carries on with the next one.
+  - If the game throws you out after a few servers in a row, whichever servers they are, try the "Extra seconds on each server before moving on" slider at 5 to 10.
+- **Picture filter** (section 9). A few things to know before you rely on it:
+  - It's sent to the game in the follow modes, Free Cam and Fixed Camera. The ball cams don't send it.
+  - Exposure, bloom, vignette, chromatic aberration and motion blur use settings the game is known to have. The other seven sliders are sent too, but the game may ignore them.
+  - A preset can take over the camera FOV and two of the graphics sliders. There are two checkboxes for that.
+  - Turning it off stops the camera changing the picture. It doesn't put the game's own picture back. If it still looks filtered, restart the spectator.
 
-## Goal Explosion Overlays
+## If something's wrong
 
-This script includes a small set of custom WorldDraw-style goal explosion overlays.
+- **The camera isn't in the list.** Almost always the folder is nested twice. See Install.
+- **My settings reset.** Press Save settings after you change things.
+- **No goal explosions.** Check they're enabled in section 7 and look at the "Arena" line there. It says which arena it's watching, or why it isn't watching one.
+- **The ball cam is sitting in an empty arena.** It's waiting for that arena's ball. Pick a player, or switch the inside mode to Free Cam and back.
+- **The Camera FOV slider does nothing.** A picture filter preset is setting the FOV. Untick "Preset also sets the camera FOV" in section 9. The ball cams, goal cam and kickoff cam also have their own FOV sliders.
+- **The trail thickness or vibrance slider snaps back.** Same thing: untick "Preset also sets graphics vibrance and ball trail thickness" in section 9.
+- **Free Cam flies through walls.** That's the default. To stop at walls, untick no-clip and tick collision safety (section 3, Free Cam).
+- **Vlog Camera looks like normal third person.** Follow+ isn't installed or wasn't found.
 
-Included goal explosion types:
+If it's none of those, open an issue and tell me the Status line from the top of the menu, the mode you were in and what you expected.
 
-- **Basic Burst**
-- **Ripple Wave**
-- **Claw Strike**
-- **Implosion**
+## Credits
 
-These effects are visual overlays drawn by the spectator script. They are not official Orion Drift goal explosions and may not behave exactly like native in-game effects.
+Streamer Cam is made by duckyinvr.
 
-Goal explosion settings include:
+It uses or builds on other people's work:
 
-- enable/disable overlay
-- default explosion type
-- test explosion type
-- explosion color
-- particle/detail count
-- ring count
-- lifetime
-- vibrance
-- debounce timing
-- max active particles
-- closest-arena-only behavior
+- **Dennssen** - [Caster Camera](https://github.com/dennssen/CasterCamera) (MIT licence). The particle system is adapted from it. The arena sizes, goal positions and goal shape, arena name matching, the overlay data format, and the rules for match stats, round starts and which ball is the match ball come from it too. Every file that uses his material has his copyright and licence notice at the top. He also made Follow+ and OD Caster Bridge, which this camera can talk to.
+- **LovelyyLayna** - Layna's Spectator Pet. Kitty and Pidgeon are ports of her pets, and the Duckling's head pats, happy face and hand feeding follow how hers work. All credit for how those pets behave goes to her.
+- **august** - august.matchmaker. The server search uses the same network calls and server names.
 
-## Public Beta Feedback
+Inspiration:
 
-This is an early public beta, so testing feedback is helpful.
+- **Plutus** (Plutus Autocaster) and **Yuki and Mozzy** (od-sideline-cam). Their cameras inspired autocast modes I'm still working on. Those aren't in this release.
+- **Rocket League**, for the whole idea of goal explosions and painted colours.
 
-If you try it, please let me know:
+## AI disclosure
 
-- whether it appears correctly in the spectator script menu
-- whether the camera modes feel stable
-- whether Basic Ball Follow is useful
-- whether ball trails stay visible
-- whether goal explosions trigger correctly
-- whether the settings UI is clear
-- whether anything causes lag, errors, or weird camera behavior
+Most of the code in this project was written with AI (mainly Claude). I came up with the features, decided how they should work, and tested them in game, but I didn't hand-write most of the Luau.
 
-When reporting a bug, please include:
+The code is tested against a mock of the game's spectator API before each release. That catches a lot, but it isn't the real game. If you find a bug, please open an issue.
 
-- what mode you were using
-- what arena/state you were in
-- what you expected to happen
-- what actually happened
-- whether it happens every time or only sometimes
+## Licence
 
-## Credits and Acknowledgements
+My own code in this project is under the MIT licence. See `LICENSE`.
 
-Streamer Cam Public Beta was built by **DuckyInVR**.
+Not everything here is mine. See `THIRD-PARTY-NOTICES.md`:
 
-Parts of the script were inspired by or adapted from Orion Drift spectator scripting examples and community scripts, including:
-
-### Dennssen’s Caster Camera
-
-Used as a reference/inspiration for:
-
-- caster-style camera ideas
-- WorldDraw graphics patterns
-- goal explosion and particle effect ideas
-- spectator script structure
-
-### Follow+ / Follow Pluss
-
-Used as a reference/inspiration for:
-
-- spectator follow camera behavior
-- player-follow camera concepts
-- camera control ideas
-
-### Orion Drift Community Script Examples
-
-Other community spectator scripts and examples helped with:
-
-- package structure
-- camera API usage
-- player and ball data access
-- GUI patterns
-- spectator scripting conventions
-
-If any part of this project needs clearer credit, please reach out and I will update the README, adjust the implementation, or remove the relevant code.
-
-## AI Assistance Disclosure
-
-This project was developed with assistance from AI tools.
-
-AI assistance was used for:
-
-- organizing code
-- debugging
-- refactoring
-- generating implementation ideas
-- writing documentation
-- packaging release builds
-- checking for obvious release issues
-
-All design choices, feature selection, testing decisions, and public release decisions were directed and reviewed by me.
-
-## Disclaimer
-
-This is a community-made spectator script.
-
-It is not affiliated with, endorsed by, or officially supported by Orion Drift.
-
-Use this script at your own risk. Make sure custom spectator scripts are allowed in whatever lobby, event, league, or tournament you are using it in.
-
-## License / Usage
-
-This is an early public beta release.
-
-If you use, modify, or share this script, please keep credits intact and credit the original inspirations where appropriate.
-
-A formal license may be added later.
+- The files with Dennssen's notice at the top contain material from Caster Camera and are under his MIT licence.
+- `specpets.luau` is a port of LovelyyLayna's Spectator Pet, included with her permission. Ask her before you reuse it somewhere else.

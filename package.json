@@ -1,0 +1,20 @@
+{
+  "author": "duckyinvr",
+  "displayName": "Streamer Cam",
+  "name": "duckyinvr.streamercam.public",
+  "version": "1.0.0",
+  "description": "Follows one player and changes camera by itself when they go into an arena. Third person, first person, ball cams with a goal cam and kickoff cam, free cam, fixed camera, goal explosions, kickoff graphics, ball trails and a pet that follows the player. Parts use material from Dennssen's Caster Camera (MIT licence; the notices are at the top of the files concerned).",
+  "keywords": [
+    "spectator",
+    "camera",
+    "streamer",
+    "follow",
+    "freecam",
+    "controller",
+    "ballcam",
+    "driftball",
+    "goal explosions"
+  ],
+  "defaultKeybind": "",
+  "main": "main.luau"
+}
